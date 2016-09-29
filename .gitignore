@@ -1,3 +1,4 @@
 /.idea
 data.db
-/images/*
+/src/images
+/src/images/*.jpg
