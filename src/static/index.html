@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Leonid Blog</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center ">Leonid Blog</a>
+      <!--<ul id="nav-mobile" class="right hide-on-med-and-down">-->
+        <!--<li><a href="#">pam-pam</a></li>-->
+      <!--</ul>-->
+    </div>
+  </nav>
+    <div class="container">
+        %for post in posts:
+        %   include("./src/templates/post.tpl",image=post[3],
+        %   title=post[1],preview=post[2],link=post[0])
+        %end
+    </div>
+</body>
+</html>
