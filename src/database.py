@@ -19,8 +19,12 @@ class DataBase:
         return self.cur.fetchall()
 
     def getById(self, post_id):
-        self.cur.execute("SELECT * FROM Posts WHERE id=?;", str(post_id))
+        self.cur.execute("SELECT * FROM Posts WHERE id=?;", (str(post_id),))
         return self.cur.fetchall()
+
+    def getLastId(self):
+        self.cur.execute("SELECT last_insert_rowid()")
+        return self.cur.fetchall()[0][0]
 
     def addNew(self, title, text, img):
         self.cur.execute("INSERT INTO Posts(title,text,img) VALUES (?,?,?);", (title, text, img))
@@ -28,4 +32,9 @@ class DataBase:
 
     def commit(self):
         self.con.commit()
+
+
+
+
+
 

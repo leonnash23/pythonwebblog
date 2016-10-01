@@ -18,11 +18,30 @@
       <!--</ul>-->
     </div>
   </nav>
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+        <!--%for post in posts:-->
+        <!--%   include("./src/templates/post.tpl",image=post[3],-->
+        <!--%   title=post[1],preview=post[2][:140],link=post[0])-->
+        <!--%end-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="container">
+        %i=0
         %for post in posts:
+        %   i+=1
+        %   if i==1:
+                <div class="row">
+        %   end
+        %   if i%3==1:
+                </div>
+                <div class="row">
+        %   end
         %   include("./src/templates/post.tpl",image=post[3],
-        %   title=post[1],preview=post[2],link=post[0])
+        %   title=post[1],preview=post[2][:140]+"...",link=post[0])
         %end
+                </div>
+
     </div>
 </body>
 </html>

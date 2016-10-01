@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>Create New Post</title>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script type="text/javascript" src="../js/materialize.min.js"></script>
+    <script>
+         $('#textarea1').val('New Text');
+         $('#textarea1').trigger('autoresize');
+        $('#title').val('New Text');
+         $('#title').trigger('autoresize');
+    </script>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper">
+
+            <div class="col 12">
+                <a href="../../" class="breadcrumb">Main page</a>
+                <a href="#" class="breadcrumb">Create new page</a>
+            </div>
+    </div>
+  </nav>
+    <div class="container" style="margin-top: 5%">
+         <div class="row">
+            <form class="col s12" action="../confirmPost" method="post" enctype="multipart/form-data">
+              <div class="row">
+                    <div class="input-field col s6">
+                      <textarea id="title" name="title" class="materialize-textarea" required="required"></textarea>
+                      <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="textarea1" name="text" class="materialize-textarea" required="required"></textarea>
+                      <label for="textarea1">Textarea</label>
+                    </div>
+                </div>
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>File</span>
+                    <input name="file" type="file" required="required">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+                 <button class="btn waves-effect waves-light" type="submit" >Submit
+                        <i class="material-icons right">send</i>
+                 </button>
+              </form>
+         </div>
+    </div>
+</body>
+</html>

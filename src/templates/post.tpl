@@ -1,6 +1,5 @@
-<div class="row">
-        <div class="col s12">
-          <div class="card hoverable medium">
+        <div class="col s12 m6 l4">
+          <div class="card hoverable ">
             <div class="card-image">
               <img src="images/{{image}}">
               <span class="card-title">{{title}}</span>
@@ -13,4 +12,3 @@
             </div>
           </div>
         </div>
-</div>

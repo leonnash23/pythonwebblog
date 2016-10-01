@@ -1,5 +1,41 @@
-from bottle import route, static_file, run, template
-from src.database import DataBase
+import os
+
+from bottle import route, static_file, run, template, post, request
+
+import sqlite3
+
+# class DataBase:
+#     con = sqlite3.Connection
+#     cur = sqlite3.Cursor
+#
+#     def __init__(self):
+#         self.con = sqlite3.connect("data.db")
+#         self.cur = self.con.cursor()
+#         self.cur.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='Posts';")
+#         if self.cur.fetchone()[0] < 1:
+#             self.cur.execute("""CREATE TABLE Posts(id INTEGER PRIMARY KEY AUTOINCREMENT,
+#                             title VARCHAR, text VARCHAR, img VARCHAR, data DATE  DEFAULT (datetime('now','localtime')));""")
+#             self.commit()
+#
+#     def getAll(self):
+#         self.cur.execute("SELECT * FROM Posts")
+#         return self.cur.fetchall()
+#
+#     def getById(self, post_id):
+#         self.cur.execute("SELECT * FROM Posts WHERE id=?;", (str(post_id),))
+#         return self.cur.fetchall()
+#
+#     def getLastId(self):
+#         self.cur.execute("SELECT last_insert_rowid()")
+#         return self.cur.fetchall()[0][0]
+#
+#     def addNew(self, title, text, img):
+#         self.cur.execute("INSERT INTO Posts(title,text,img) VALUES (?,?,?);", (title, text, img))
+#         self.commit()
+#
+#     def commit(self):
+#         self.con.commit()
+from database import DataBase
 
 
 @route("/")
@@ -24,4 +60,40 @@ def css(file):
     return static_file(file, root="./src/{0}/{1}".format("fonts", "roboto"))
 
 
+@route("/createPost")
+def cretepost():
+    return static_file("createPost.html", root="./src/static")
+
+
+@post("/confirmPost")
+def do_login():
+    title = request.forms.get("title")
+    text = request.forms.get("text")
+    f = request.files.get("file")
+    db = DataBase()
+    name, ext = os.path.splitext(f.filename)
+    try:
+        post_id = str(int(db.getAll()[-1][0]) + 1)
+    except:
+        post_id = str(1)
+    file_name = post_id + ext
+    file_path = "{path}/{file}".format(path="./src/images", file=file_name)
+    with open(file_path, 'wb') as open_file:
+        open_file.write(f.file.read())
+    db.addNew(title, text, file_name)
+    return """<p>Post created</p><a href="../post/{0}">Пост</a>""".format(post_id)
+
+
+@route("/getArchive")
+def getArchive():
+    import zipfile
+    zipf = zipfile.ZipFile('Archive.zip', 'w', zipfile.ZIP_DEFLATED)
+    for root, dirs, files in os.walk("."):
+        for file in files:
+            zipf.write(os.path.join(root, file))
+    zipf.close()
+    return static_file("Archive.zip", root='.', download="Archive.zip")
+
+
 run(host="localhost", port=8080)
+# run(host="0.0.0.0", port=os.environ['PORT'])
